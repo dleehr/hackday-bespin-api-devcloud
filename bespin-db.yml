@@ -7,20 +7,20 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: postgres
-    name: postgres
+      app: postgresql-95-centos7
+    name: postgresql-95-centos7
   spec:
     lookupPolicy:
       local: false
     tags:
     - annotations:
-        openshift.io/imported-from: postgres:9.5
+        openshift.io/imported-from: centos/postgresql-95-centos7
       from:
         kind: DockerImage
-        name: postgres:9.5
+        name: centos/postgresql-95-centos7
       generation: null
       importPolicy: {}
-      name: "9.5"
+      name: latest
       referencePolicy:
         type: ""
   status:
@@ -32,13 +32,13 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: postgres
-    name: postgres
+      app: postgresql-95-centos7
+    name: postgresql-95-centos7
   spec:
     replicas: 1
     selector:
-      app: postgres
-      deploymentconfig: postgres
+      app: postgresql-95-centos7
+      deploymentconfig: postgresql-95-centos7
     strategy:
       resources: {}
     template:
@@ -47,48 +47,32 @@ items:
           openshift.io/generated-by: OpenShiftNewApp
         creationTimestamp: null
         labels:
-          app: postgres
-          deploymentconfig: postgres
+          app: postgresql-95-centos7
+          deploymentconfig: postgresql-95-centos7
       spec:
         containers:
-        - image: postgres:9.5
-          env:
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: bespin-db-config
-                  key: db-name
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: bespin-db-config
-                  key: db-user
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: bespin-db-config
-                  key: db-password
-          name: postgres
+        - image: centos/postgresql-95-centos7
+          name: postgresql-95-centos7
           ports:
           - containerPort: 5432
             protocol: TCP
           resources: {}
           volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: postgres-volume-1
+          - mountPath: /var/lib/pgsql/data
+            name: postgresql-95-centos7-volume-1
         volumes:
         - emptyDir: {}
-          name: postgres-volume-1
+          name: postgresql-95-centos7-volume-1
     test: false
     triggers:
     - type: ConfigChange
     - imageChangeParams:
         automatic: true
         containerNames:
-        - postgres
+        - postgresql-95-centos7
         from:
           kind: ImageStreamTag
-          name: postgres:9.5
+          name: postgresql-95-centos7:latest
       type: ImageChange
   status:
     availableReplicas: 0
@@ -104,8 +88,8 @@ items:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
     labels:
-      app: postgres
-    name: db
+      app: postgresql-95-centos7
+    name: postgresql-95-centos7
   spec:
     ports:
     - name: 5432-tcp
@@ -113,8 +97,8 @@ items:
       protocol: TCP
       targetPort: 5432
     selector:
-      app: postgres
-      deploymentconfig: postgres
+      app: postgresql-95-centos7
+      deploymentconfig: postgresql-95-centos7
   status:
     loadBalancer: {}
 kind: List
