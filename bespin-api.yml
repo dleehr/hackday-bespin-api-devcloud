@@ -89,6 +89,8 @@ items:
           volumeMounts:
           - mountPath: /srv/ui
             name: bespin-api-volume-1
+          - mountPath: /bespin-web-certs/
+            name: bespin-web-certs-volume
         volumes:
         - emptyDir: {}
           name: bespin-api-volume-1
