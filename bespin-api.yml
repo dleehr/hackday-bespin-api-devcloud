@@ -17,7 +17,7 @@ items:
         openshift.io/imported-from: dukegcb/bespin-api
       from:
         kind: DockerImage
-        name: dukegcb/bespin-api
+        name: dukegcb/bespin-api:1.2.2-apache
       generation: null
       importPolicy: {}
       name: latest
@@ -51,7 +51,7 @@ items:
           deploymentconfig: bespin-api
       spec:
         containers:
-        - image: dukegcb/bespin-api
+        - image: dukegcb/bespin-api:1.2.2-apache
           env:
             - name: BESPIN_DB_NAME
               valueFrom:
