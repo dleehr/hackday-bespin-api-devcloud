@@ -53,7 +53,7 @@ items:
         containers:
         - image: centos/postgresql-95-centos7
           env:
-            - name: POSTGRESQL_DB
+            - name: POSTGRESQL_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: bespin-db-config
