@@ -73,7 +73,6 @@ items:
                 secretKeyRef:
                   name: bespin-db-config
                   key: db-host
-
           name: bespin-api
           ports:
           - containerPort: 8000
