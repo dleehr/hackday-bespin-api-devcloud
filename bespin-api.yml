@@ -53,17 +53,17 @@ items:
         containers:
         - image: dukegcb/bespin-api:1.2.2-apache
           env:
-            - name: BESPIN_DB_NAME
+            - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   name: bespin-db-config
                   key: db-name
-            - name: BESPIN_DB_USER
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: bespin-db-config
                   key: db-user
-            - name: BESPIN_DB_PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: bespin-db-config
