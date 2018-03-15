@@ -14,10 +14,10 @@ items:
       local: false
     tags:
     - annotations:
-        openshift.io/imported-from: dukegcb/bespin-api:1.2.2-apache
+        openshift.io/imported-from: dukegcb/bespin-api:1.2.2-apache-openshift
       from:
         kind: DockerImage
-        name: dukegcb/bespin-api:1.2.2-apache
+        name: dukegcb/bespin-api:1.2.2-apache-openshift
       generation: null
       importPolicy: {}
       name: 1.2.2-apache
@@ -41,15 +41,6 @@ items:
       deploymentconfig: bespin-api
     strategy:
       resources: {}
-      rollingParams:
-        pre:
-          failurePolicy: Abort
-          execNewPod:
-            containerName: bespin-api
-            command: ["/bin/sh", "-c", "/bespin-link-certs/link-certs.sh"]
-          volumes:
-            - bespin-link-certs-volume
-            - bespin-web-certs-volume
     template:
       metadata:
         annotations:
@@ -60,7 +51,7 @@ items:
           deploymentconfig: bespin-api
       spec:
         containers:
-        - image: dukegcb/bespin-api:1.2.2-apache
+        - image: dukegcb/bespin-api:1.2.2-apache-openshift
           env:
             - name: POSTGRES_DB
               valueFrom:
@@ -86,9 +77,6 @@ items:
           - name: bespin-web-certs-volume
             mountPath: /bespin-web-certs/
             readOnly: true
-          - name: bespin-link-certs-volume
-            mountPath: /bespin-link-certs/
-            readOnly: true
           name: bespin-api
           ports:
           - containerPort: 80
@@ -107,9 +95,6 @@ items:
         - name: bespin-web-cert-volume
           secret:
             secretName: bespin-web-cert
-        - name: bespin-link-certs-volume
-          configMap:
-            name: bespin-link-certs
     test: false
     triggers:
     - type: ConfigChange
