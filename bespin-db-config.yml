@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bespin-db-config
+stringData:
+  db-name: bespin
+  db-user: bespinadmin
+  db-password: gkuwgnke7cnwucnw
+  db-host: db.gcb-bespin.svc
