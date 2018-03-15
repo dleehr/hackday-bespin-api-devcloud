@@ -14,13 +14,13 @@ items:
       local: false
     tags:
     - annotations:
-        openshift.io/imported-from: dukegcb/bespin-api
+        openshift.io/imported-from: dukegcb/bespin-api:1.2.2-apache
       from:
         kind: DockerImage
         name: dukegcb/bespin-api:1.2.2-apache
       generation: null
       importPolicy: {}
-      name: latest
+      name: 1.2.2-apache
       referencePolicy:
         type: ""
   status:
@@ -75,9 +75,19 @@ items:
                   key: db-host
           name: bespin-api
           ports:
+          - containerPort: 80
+            protocol: TCP
           - containerPort: 8000
             protocol: TCP
+          - containerPort: 443
+            protocol: TCP
           resources: {}
+          volumeMounts:
+          - mountPath: /srv/ui
+            name: bespin-api-volume-1
+        volumes:
+        - emptyDir: {}
+          name: bespin-api-volume-1
     test: false
     triggers:
     - type: ConfigChange
@@ -87,7 +97,7 @@ items:
         - bespin-api
         from:
           kind: ImageStreamTag
-          name: bespin-api:latest
+          name: bespin-api:1.2.2-apache
       type: ImageChange
   status:
     availableReplicas: 0
@@ -107,6 +117,14 @@ items:
     name: bespin-api
   spec:
     ports:
+    - name: 80-tcp
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    - name: 443-tcp
+      port: 443
+      protocol: TCP
+      targetPort: 443
     - name: 8000-tcp
       port: 8000
       protocol: TCP
