@@ -106,7 +106,7 @@ items:
         - bespin-api
         from:
           kind: ImageStreamTag
-          name: bespin-api:1.2.2-apache
+          name: bespin-api:1.2.2-apache-openshift
       type: ImageChange
   status:
     availableReplicas: 0
