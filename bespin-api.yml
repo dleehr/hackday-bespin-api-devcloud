@@ -41,6 +41,15 @@ items:
       deploymentconfig: bespin-api
     strategy:
       resources: {}
+      rollingParams:
+        pre:
+          failurePolicy: Abort
+          execNewPod:
+            containerName: bespin-api
+            command: ["/bin/sh", "-c", "/bespin-link-certs/link-certs.sh"]
+          volumes:
+            - bespin-link-certs-volume
+            - bespin-web-certs-volume
     template:
       metadata:
         annotations:
@@ -74,8 +83,11 @@ items:
                   name: bespin-db-config
                   key: db-host
           volumeMounts:
-          - name: bespin-web-cert-volume
-            mountPath: /etc/external/ssl/
+          - name: bespin-web-certs-volume
+            mountPath: /bespin-web-certs/
+            readOnly: true
+          - name: bespin-link-certs-volume
+            mountPath: /bespin-link-certs/
             readOnly: true
           name: bespin-api
           ports:
@@ -95,6 +107,9 @@ items:
         - name: bespin-web-cert-volume
           secret:
             secretName: bespin-web-cert
+        - name: bespin-link-certs-volume
+          configMap:
+            name: bespin-link-certs
     test: false
     triggers:
     - type: ConfigChange
