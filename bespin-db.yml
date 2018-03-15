@@ -52,6 +52,22 @@ items:
       spec:
         containers:
         - image: postgres:9.5
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-name
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-password
           name: postgres
           ports:
           - containerPort: 5432
@@ -89,7 +105,7 @@ items:
     creationTimestamp: null
     labels:
       app: postgres
-    name: postgres
+    name: db
   spec:
     ports:
     - name: 5432-tcp
