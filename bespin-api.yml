@@ -73,6 +73,10 @@ items:
                 secretKeyRef:
                   name: bespin-db-config
                   key: db-host
+          volumeMounts:
+          - name: bespin-web-cert-volume
+            mountPath: /etc/external/ssl/
+            readOnly: true
           name: bespin-api
           ports:
           - containerPort: 80
@@ -88,6 +92,9 @@ items:
         volumes:
         - emptyDir: {}
           name: bespin-api-volume-1
+        - name: bespin-web-cert-volume
+          secret:
+            secretName: bespin-web-cert
     test: false
     triggers:
     - type: ConfigChange
