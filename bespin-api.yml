@@ -20,7 +20,7 @@ items:
         name: dukegcb/bespin-api:1.2.2-apache-openshift
       generation: null
       importPolicy: {}
-      name: 1.2.2-apache
+      name: 1.2.2-apache-openshift
       referencePolicy:
         type: ""
   status:
