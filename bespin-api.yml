@@ -92,7 +92,7 @@ items:
         volumes:
         - emptyDir: {}
           name: bespin-api-volume-1
-        - name: bespin-web-cert-volume
+        - name: bespin-web-certs-volume
           secret:
             secretName: bespin-web-cert
     test: false
