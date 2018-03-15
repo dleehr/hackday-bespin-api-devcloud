@@ -1,6 +1,6 @@
 apiVersion: v1
 items:
-- apiVersion: v1
+ apiVersion: v1
   kind: ImageStream
   metadata:
     annotations:
@@ -25,7 +25,7 @@ items:
         type: ""
   status:
     dockerImageRepository: ""
-- apiVersion: v1
+ apiVersion: v1
   kind: DeploymentConfig
   metadata:
     annotations:
@@ -52,6 +52,22 @@ items:
       spec:
         containers:
         - image: centos/postgresql-95-centos7
+          env:
+            - name: POSTGRESQL_DB
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-name
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-user
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-password
           name: postgresql-95-centos7
           ports:
           - containerPort: 5432
@@ -81,7 +97,7 @@ items:
     replicas: 0
     unavailableReplicas: 0
     updatedReplicas: 0
-- apiVersion: v1
+ apiVersion: v1
   kind: Service
   metadata:
     annotations:
@@ -89,7 +105,7 @@ items:
     creationTimestamp: null
     labels:
       app: postgresql-95-centos7
-    name: postgresql-95-centos7
+    name: db
   spec:
     ports:
     - name: 5432-tcp
