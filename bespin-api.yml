@@ -82,6 +82,30 @@ items:
       spec:
         containers:
         - image: bespin-api:latest
+          env:
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-name
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-user
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-password
+            - name: DJANGO_SETTINGS_MODULE
+              value: bespin.settings_prod
+            - name: BESPIN_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-api-config
+                  key: bespin-secret-key
+
           name: bespin-api
           ports:
           - containerPort: 8080
