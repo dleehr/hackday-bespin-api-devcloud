@@ -98,6 +98,11 @@ items:
                 secretKeyRef:
                   name: bespin-db-config
                   key: db-password
+            - name: POSTGRESQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: bespin-db-config
+                  key: db-host
             - name: DJANGO_SETTINGS_MODULE
               value: bespin.settings_prod
             - name: BESPIN_SECRET_KEY
@@ -105,7 +110,6 @@ items:
                 secretKeyRef:
                   name: bespin-api-config
                   key: bespin-secret-key
-
           name: bespin-api
           ports:
           - containerPort: 8080
