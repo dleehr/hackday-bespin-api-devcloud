@@ -3,16 +3,16 @@ kind: Route
 metadata:
   creationTimestamp: null
   labels:
-    app: bespin-api
-  name: bespin-api
+    app: httpd-ex
+  name: httpd-ex
 spec:
   host: "bespin-web.192.168.64.5.nip.io"
-  path: /api/
+  path: /
   port:
     targetPort: 8080-tcp
   to:
     kind: ""
-    name: bespin-api
+    name: httpd-ex
     weight: null
 status:
   ingress: []
