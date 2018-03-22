@@ -6,4 +6,4 @@ stringData:
   db-name: bespin
   db-user: bespinadmin
   db-password: gkuwgnke7cnwucnw
-  db-host: db.gcb-bespin.svc
+  db-host: db
