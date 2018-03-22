@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  bespin-secret-key: bGczbThqZzFrdW5xZ2tnbnFrZ2tnYnY=
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: bespin-api-config
