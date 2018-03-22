@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bespin-api
+  name: bespin-api
+spec:
+  host: ""
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: ""
+    name: bespin-api
+    weight: null
+status:
+  ingress: []
