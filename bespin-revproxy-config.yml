@@ -15,6 +15,7 @@ data:
         "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
 
       # Proxies for API services
+      ProxyPreserveHost On
       ProxyPass "/accounts/" "http://bespin-api:8080/accounts/"
       ProxyPassReverse "/accounts/" "http://bespin-api:8080/accounts/"
       ProxyPass "/admin/" "http://bespin-api:8080/admin/"
