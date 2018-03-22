@@ -1,0 +1,37 @@
+apiVersion: v1
+data:
+  bespin-revproxy.conf: |
+    <VirtualHost *:8080>
+      ServerName cert-protected
+      ServerAlias cert-protected*
+      ErrorLog |/usr/bin/cat
+      TransferLog |/usr/bin/cat
+      LogLevel warn
+      BrowserMatch "MSIE [2-5]" \
+        nokeepalive ssl-unclean-shutdown \
+        downgrade-1.0 force-response-1.0
+
+      CustomLog |/usr/bin/cat \
+        "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+      # Proxies for API services
+      ProxyPass "/accounts/" "http://bespin-api:8080/accounts/"
+      ProxyPassReverse "/accounts/" "http://bespin-api:8080/accounts/"
+      ProxyPass "/admin/" "http://bespin-api:8080/admin/"
+      ProxyPassReverse "/admin/" "http://bespin-api:8080/admin/"
+      ProxyPass "/api/" "http://bespin-api:8080/api/"
+      ProxyPassReverse "/api/" "http://bespin-api:8080/api/"
+      ProxyPass "/api-auth/" "http://bespin-api-auth:8080/api-auth/"
+      ProxyPassReverse "/api-auth/" "http://bespin-api-auth:8080/api-auth/"
+      ProxyPass "/api-auth-token/" "http://bespin-api-auth-token:8080/api-auth-token/"
+      ProxyPassReverse "/api-auth-token/" "http://bespin-api-auth-token:8080/api-auth-token/"
+      ProxyPass "/auth/" "http://bespin-auth:8080/auth/"
+      ProxyPassReverse "/auth/" "http://bespin-auth:8080/auth/"
+      ProxyPass "/static/" "http://bespin-static:8080/static/"
+      ProxyPassReverse "/static/" "http://bespin-static:8080/static/"
+
+    </VirtualHost>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: bespin-revproxy-config
