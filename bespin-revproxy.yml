@@ -8,7 +8,7 @@ items:
     creationTimestamp: null
     labels:
       app: bespin-revproxy
-    name: bespin-revproxy
+    name: httpd-24-centos7
   spec:
     lookupPolicy:
       local: false
@@ -25,6 +25,59 @@ items:
         type: ""
   status:
     dockerImageRepository: ""
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: bespin-revproxy
+    name: bespin-revproxy
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: bespin-revproxy
+    name: bespin-revproxy
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: bespin-revproxy:latest
+    postCommit: {}
+    resources: {}
+    source:
+      git:
+        uri: https://github.com/openshift/httpd-ex
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: httpd-24-centos7:latest
+      type: Source
+    triggers:
+    - github:
+        secret: RItxVDK4GuMrVVauHv72
+      type: GitHub
+    - generic:
+        secret: ORY-aAvF8iTiO35hofG5
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -51,7 +104,7 @@ items:
           deploymentconfig: bespin-revproxy
       spec:
         containers:
-        - image: centos/httpd-24-centos7
+        - image: bespin-revproxy:latest
           name: bespin-revproxy
           ports:
           - containerPort: 8080
@@ -59,14 +112,6 @@ items:
           - containerPort: 8443
             protocol: TCP
           resources: {}
-          volumeMounts:
-          - name: bespin-revproxy-config-volume
-            mountPath: /opt/app-root/etc/httpd.d
-            readOnly: true
-        volumes:
-          - name: bespin-revproxy-config-volume
-            configMap:
-              name: bespin-revproxy-config
     test: false
     triggers:
     - type: ConfigChange
