@@ -64,7 +64,7 @@ items:
             mountPath: /opt/app-root/etc/httpd.d
             readOnly: true
         volumes:
-          name: bespin-revproxy-config-volume
+          - name: bespin-revproxy-config-volume
             configMap:
               name: bespin-revproxy-config
     test: false
