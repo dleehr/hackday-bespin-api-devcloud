@@ -59,6 +59,14 @@ items:
           - containerPort: 8443
             protocol: TCP
           resources: {}
+          volumeMounts:
+          - name: bespin-revproxy-config-volume
+            mountPath: /opt/app-root/etc/httpd.d
+            readOnly: true
+        volumes:
+          name: bespin-revproxy-config-volume
+            configMap:
+              name: bespin-revproxy-config
     test: false
     triggers:
     - type: ConfigChange
