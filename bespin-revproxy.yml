@@ -61,7 +61,7 @@ items:
           resources: {}
           volumeMounts:
           - name: bespin-revproxy-config-volume
-            mountPath: /opt/app-root/etc/httpd.d
+            mountPath: /opt/rh/httpd24/root/etc/httpd/conf.d
             readOnly: true
         volumes:
           - name: bespin-revproxy-config-volume
