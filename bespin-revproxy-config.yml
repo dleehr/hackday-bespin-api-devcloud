@@ -21,15 +21,14 @@ data:
       ProxyPassReverse "/admin/" "http://bespin-api:8080/admin/"
       ProxyPass "/api/" "http://bespin-api:8080/api/"
       ProxyPassReverse "/api/" "http://bespin-api:8080/api/"
-      ProxyPass "/api-auth/" "http://bespin-api-auth:8080/api-auth/"
-      ProxyPassReverse "/api-auth/" "http://bespin-api-auth:8080/api-auth/"
-      ProxyPass "/api-auth-token/" "http://bespin-api-auth-token:8080/api-auth-token/"
-      ProxyPassReverse "/api-auth-token/" "http://bespin-api-auth-token:8080/api-auth-token/"
-      ProxyPass "/auth/" "http://bespin-auth:8080/auth/"
-      ProxyPassReverse "/auth/" "http://bespin-auth:8080/auth/"
-      ProxyPass "/static/" "http://bespin-static:8080/static/"
-      ProxyPassReverse "/static/" "http://bespin-static:8080/static/"
-
+      ProxyPass "/api-auth/" "http://bespin-api:8080/api-auth/"
+      ProxyPassReverse "/api-auth/" "http://bespin-api:8080/api-auth/"
+      ProxyPass "/api-auth-token/" "http://bespin-api:8080/api-auth-token/"
+      ProxyPassReverse "/api-auth-token/" "http://bespin-api:8080/api-auth-token/"
+      ProxyPass "/auth/" "http://bespin-api:8080/auth/"
+      ProxyPassReverse "/auth/" "http://bespin-api:8080/auth/"
+      ProxyPass "/static/" "http://bespin-api:8080/static/"
+      ProxyPassReverse "/static/" "http://bespin-api:8080/static/"
     </VirtualHost>
 kind: ConfigMap
 metadata:
