@@ -28,6 +28,17 @@ items:
 - apiVersion: v1
   kind: ImageStream
   metadata:
+    labels:
+      app: bespin-ui
+    name: bespin-ui-ember-build
+  spec:
+    lookupPolicy:
+      local: false
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
     annotations:
       openshift.io/generated-by: OpenShiftNewApp
     creationTimestamp: null
@@ -39,6 +50,47 @@ items:
       local: false
   status:
     dockerImageRepository: ""
+# Build 1 - ember build
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: bespin-ui
+    name: bespin-ui-ember-build
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: bespin-ui-ember-build:latest
+    postCommit: {}
+    resources: {}
+    source:
+      git:
+        uri: https://github.com/dleehr/bespin-ui
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs-8-centos7:latest
+      type: Source
+    triggers:
+    - github:
+        secret: zXOy_ADs4gx5_RTWJ1X3
+      type: GitHub
+    - generic:
+        secret: tptKXlAodUBJEtvDbpB5
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+# Build 2 - copy built application into apache image
 - apiVersion: v1
   kind: BuildConfig
   metadata:
@@ -54,30 +106,26 @@ items:
       to:
         kind: ImageStreamTag
         name: bespin-ui:latest
-    postCommit: {}
-    resources: {}
     source:
-      git:
-        uri: https://github.com/dleehr/bespin-ui
-      type: Git
+      type: Dockerfile
+      dockerfile: |-
+        FROM centos/httpd-24-centos7:latest
+        COPY dist /tmp/
+        RUN cp -r /tmp/dist/* /var/www/html/
+        RUN rm -r /tmp/
+      images:
+      - from:
+          kind: ImageStreamTag
+          name: bespin-ui-ember-build:latest
+        paths:
+        - sourcePath: /opt/app-root/src/dist
+          destinationDir: "."
     strategy:
-      sourceStrategy:
+      dockerStrategy:
         from:
           kind: ImageStreamTag
-          name: nodejs-8-centos7:latest
-        runtimeImage:
-          kind: ImageStreamTag
           name: httpd-24-centos7:latest
-        runtimeArtifacts:
-          - sourcePath: /opt/app-root/src/dist
-      type: Source
     triggers:
-    - github:
-        secret: zXOy_ADs4gx5_RTWJ1X3
-      type: GitHub
-    - generic:
-        secret: tptKXlAodUBJEtvDbpB5
-      type: Generic
     - type: ConfigChange
     - imageChange: {}
       type: ImageChange
