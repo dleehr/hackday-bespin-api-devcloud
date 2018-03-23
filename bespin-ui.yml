@@ -121,6 +121,7 @@ items:
     strategy:
       dockerStrategy:
         from:
+          # This imagestream is actually created by the bespin-revproxy
           kind: ImageStreamTag
           name: httpd-24-centos7:latest
     triggers:
