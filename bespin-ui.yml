@@ -110,9 +110,7 @@ items:
       type: Dockerfile
       dockerfile: |-
         FROM centos/httpd-24-centos7:latest
-        COPY dist /tmp/
-        RUN cp -r /tmp/dist/* /var/www/html/
-        RUN rm -r /tmp/dist
+        COPY dist/* /var/www/html/
       images:
       - from:
           kind: ImageStreamTag
