@@ -119,7 +119,7 @@ items:
           name: bespin-ui-ember-build:latest
         paths:
         - sourcePath: /opt/app-root/src/dist
-          destinationDir: "."
+          destinationDir: "dist"
     strategy:
       dockerStrategy:
         from:
