@@ -67,7 +67,7 @@ items:
           name: nodejs-8-centos7:latest
         runtimeImage:
           kind: ImageStreamTag
-          name: centos/httpd-24-centos7:latest
+          name: httpd-24-centos7:latest
         runtimeArtifacts:
           - sourcePath: /opt/app-root/src/dist
       type: Source
