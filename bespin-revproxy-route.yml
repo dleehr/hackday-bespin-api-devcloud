@@ -13,5 +13,7 @@ spec:
     kind: ""
     name: bespin-revproxy
     weight: null
+  tls:
+    termination: edge
 status:
   ingress: []
