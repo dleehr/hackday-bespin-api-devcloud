@@ -16,6 +16,7 @@ oc create -f bespin-revproxy-config.yml
 # Now create the services
 oc create -f bespin-db.yml
 oc create -f bespin-api.yml
+oc create -f bespin-ui.yml
 oc create -f bespin-revproxy.yml
 
 # Finally, create the one route into the proxy
